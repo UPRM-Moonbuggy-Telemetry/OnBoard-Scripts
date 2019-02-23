@@ -1,29 +1,16 @@
-import requestsHTTP as Req
+import requestsHTTP as req
+import queue
 import random as rnd
 import time as t
 timeArray = t.ctime().split(" ")
 time = timeArray[3]
 date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
-'''
-example = [{
-            "strain_sensor_1": 42,
-            "strain_sensor_2": 65,
-            "strain_sensor_3": 0,
-            "strain_sensor_4": 1,
-            "vibration_sensor_1": 9,
-            "vibration_sensor_2": 20,
-            "vibration_sensor_3": 3,
-            "vibration_sensor_4": 18,
-            "vibration_sensor_5": 0,
-            "battery_status": 98,
-            "latitude": 87.01343143,
-            "longitude": 23.63418,
-            "OBC_time": time,
-            "OBC_date": date
-          }]
-'''
-randomData = []
 
+
+data = {}   # Info obtain from the text file must convert to json format
+q = queue.Queue()     # This will store the values when there's no connection
+dataArray = []      # Array containing all the data
+randomData = []
 while True:
     data = {
             "id": rnd.randint(0, 100),
@@ -42,8 +29,21 @@ while True:
             "OBC_time": time,
             "OBC_date": date
          }
-    randomData.append(data)
-    p = Req.postData(randomData)
-    t.sleep(3)
+    # randomData.append(data)
+    try:
+        r = req.getAll()  # Check if there's connection
+        if not q.empty():  # If queue is not empty and there's connection dequeue all data to the dataArray
+            for i in range(q.qsize()):
+                d = q.get()  # Functions as dequeue
+                dataArray.append(d)
+                req.postData(dataArray)
+        else:
+            dataArray.append(data)  # If there's connection and the queue is empty just push data to the dataArray
+            req.postData(dataArray)
+            t.sleep(3)
+    except Exception:
+        print("Enter exception")
+        q.put(data)
+        t.sleep(3)
 
 

@@ -7,11 +7,13 @@ headers = {'content-type': 'application/json'}
 
 
 def getAll():
-    req.get(url)
+    r = req.get(url)
+    return r.status_code
 
 
 def postData(Data):
-    req.post(url, data=json.dumps(Data), headers=headers)
+    r = req.post(url, data=json.dumps(Data), headers=headers)
+    return r.status_code
 
 '''  To do 
 def updateData(id):
