@@ -1,8 +1,8 @@
-import time
-time = time.ctime()
-timeArray = time.split(" ")
-print(timeArray)
-date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
-t = timeArray[3]
+import time as t
+from datetime import date as d
+
+date = d.today()
+time = t.ctime().split()[3]
+
 print(date)
-print(t)
+print(time)

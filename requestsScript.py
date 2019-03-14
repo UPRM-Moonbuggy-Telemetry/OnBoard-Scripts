@@ -1,9 +1,11 @@
 import requestsHTTP as Req
 import random as rnd
 import time as t
-timeArray = t.ctime().split(" ")
-time = timeArray[3]
-date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
+from datetime import date as d
+
+date = d.today()
+time = t.ctime().split()[3]
+
 '''
 example = [{
             "strain_sensor_1": 42,
@@ -44,6 +46,6 @@ while True:
          }
     randomData.append(data)
     p = Req.postData(randomData)
-    t.sleep(3)
+    t.sleep(1)
 
 
