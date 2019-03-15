@@ -8,9 +8,13 @@ def fileParser(file_path):
         csv_rows = csv.reader(csv_file, delimiter=',')
         for row in csv_rows:
             row_list = list(row)
-            date = d.today()
-            time = t.ctime().split()[3]
+            # date = d.today()
+            # time = t.ctime().split()[3]
+            timeArray = t.ctime().split(" ")
+            time = timeArray[3]
+            date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
             json = {
+                "id": 10,
                 "strain_sensor_1": int(row_list[0]),
                 "strain_sensor_2": int(row_list[1]),
                 "strain_sensor_3": int(row_list[2]),
@@ -23,8 +27,8 @@ def fileParser(file_path):
                 "battery_status": int(row_list[9]),
                 "latitude": float(row_list[10]),
                 "longitude": float(row_list[11]),
-                "OBC_date": date,
-                "OBC_time": time
+                "OBC_time": time,
+                "OBC_date": date
              }
             json_list.append(json)
         return json_list
