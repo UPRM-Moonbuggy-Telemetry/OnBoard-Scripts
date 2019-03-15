@@ -1,5 +1,4 @@
 import csv, time as t
-from datetime import date as d
 
 
 def fileParser(file_path):
