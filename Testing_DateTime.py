@@ -1,14 +1,8 @@
-import datetime
-import random
-import matplotlib.pyplot as plt
-print(datetime.datetime.now())
-# make up some data
-x = [datetime.datetime.now()]
-y = [i+random.gauss(0,1) for i,_ in enumerate(x)]
+import time as t
+from datetime import date as d
 
+date = d.today()
+time = t.ctime().split()[3]
 
-# plot
-plt.plot(x,y)
-# beautify the x-labels
-plt.gcf().autofmt_xdate()
-plt.show()
+print(date)
+print(time)

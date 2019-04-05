@@ -1,4 +1,6 @@
 import csv, time as t
+from datetime import date as d
+
 
 def fileParser(file_path):
     json_list = []
@@ -6,18 +8,13 @@ def fileParser(file_path):
         csv_rows = csv.reader(csv_file, delimiter=',')
         for row in csv_rows:
             row_list = list(row)
-            # date = d.today()
-            # time = t.ctime().split()[3]
-            timeArray = t.ctime().split(" ")
-            time = timeArray[3]
-            date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
+            date = d.today()
+            time = t.ctime().split()[3]
             json = {
-                "id": 10,
                 "strain_sensor_1": int(row_list[0]),
                 "strain_sensor_2": int(row_list[1]),
                 "strain_sensor_3": int(row_list[2]),
                 "strain_sensor_4": int(row_list[3]),
-
                 "vibration_sensor_1": int(row_list[4]),
                 "vibration_sensor_2": int(row_list[5]),
                 "vibration_sensor_3": int(row_list[6]),

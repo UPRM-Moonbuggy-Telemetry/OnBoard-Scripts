@@ -2,11 +2,12 @@ import requestsHTTP as req
 import queue
 import random as rnd
 import time as t
-import fileParser
-timeArray = t.ctime().split(" ")
-time = timeArray[3]
-date = timeArray[0] + " " + timeArray[1] + " " + timeArray[2]
 
+from datetime import date as d
+
+
+date = d.today()
+time = t.ctime().split()[3]
 
 data = {}   # Info obtain from the text file must convert to json format
 q = queue.Queue()     # This will store the values when there's no connection
