@@ -1,6 +1,5 @@
 import csv, time as t
 
-
 def fileParser(file_path):
     json_list = []
     with open(file_path) as csv_file:
@@ -18,6 +17,7 @@ def fileParser(file_path):
                 "strain_sensor_2": int(row_list[1]),
                 "strain_sensor_3": int(row_list[2]),
                 "strain_sensor_4": int(row_list[3]),
+
                 "vibration_sensor_1": int(row_list[4]),
                 "vibration_sensor_2": int(row_list[5]),
                 "vibration_sensor_3": int(row_list[6]),
