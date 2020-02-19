@@ -9,7 +9,7 @@ def parser(Data_String):
     GPS_string = data_types[1]
 """
     Data_List = Data_String.split(',')
-#    GPS_List = GPS_parser(GPS_string)
+#    GPS_List = GPS_parser(GPS_string).
     
     for i in range(len(Data_List)):
         Data_List[i] = Data_List[i].strip()
