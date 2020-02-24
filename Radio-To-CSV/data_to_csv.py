@@ -1,7 +1,7 @@
-import csv
 import csv_funcs
 
-from radiodata import RadioData
+from radiodata.radiodata import RadioData
+
 
 # This is the main function of the Radio-to-CSV script. 
 # It writes the data given by a RadioData object into a CSV file with the given name.
