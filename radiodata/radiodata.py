@@ -1,77 +1,77 @@
 class RadioData:
 
-    FIELDNAMES = {
-        "ID": "id",
-        "STRAIN_1": "strain_sensor_1",
-        "STRAIN_2": "strain_sensor_2",
-        "STRAIN_3": "strain_sensor_3",
-        "STRAIN_4": "strain_sensor_4",
-        "VIBRATION_1": "vibration_sensor_1",
-        "VIBRATION_2": "vibration_sensor_2",
-        "VIBRATION_3": "vibration_sensor_3",
-        "VIBRATION_4": "vibration_sensor_4",
-        "VIBRATION_5": "vibration_sensor_5",
-        "BATTERY": "battery_status",
-        "LATITUDE": "latitude",
-        "LONGITUDE": "longitude",
-        "OBC_TIME": "OBC_time",
-        "OBC_DATE": "OBC_date",
-    }
+    FIELDNAMES = [
+        "strain_front_lft_1",
+        "strain_front_lft_2",
+        "strain_front_lft_3",
+        "strain_front_rt_1",
+        "strain_front_rt_2",
+        "strain_front_rt_3",
+        "strain_center_1",
+        "strain_center_2",
+        "strain_center_3",
+        "vibration_front_lft",
+        "vibration_front_rt",
+        "vibration_rear_lft",
+        "vibration_rear_rt",
+        "vibration_center",
+        "battery_status",
 
-    def __init__(self, data_dict: dict):
-        self.id = data_dict[RadioData.FIELDNAMES['ID']]
-        self.strain_sensor_1 = data_dict[RadioData.FIELDNAMES['STRAIN_1']]
-        self.strain_sensor_2 = data_dict[RadioData.FIELDNAMES['STRAIN_2']]
-        self.strain_sensor_3 = data_dict[RadioData.FIELDNAMES['STRAIN_3']]
-        self.strain_sensor_4 = data_dict[RadioData.FIELDNAMES['STRAIN_4']]
-        self.vibration_sensor_1 = data_dict[RadioData.FIELDNAMES['VIBRATION_1']]
-        self.vibration_sensor_2 = data_dict[RadioData.FIELDNAMES['VIBRATION_2']]
-        self.vibration_sensor_3 = data_dict[RadioData.FIELDNAMES['VIBRATION_3']]
-        self.vibration_sensor_4 = data_dict[RadioData.FIELDNAMES['VIBRATION_4']]
-        self.vibration_sensor_5 = data_dict[RadioData.FIELDNAMES['VIBRATION_5']]
-        self.battery_status = data_dict[RadioData.FIELDNAMES['BATTERY']]
-        self.latitude = data_dict[RadioData.FIELDNAMES['LATITUDE']]
-        self.longitude = data_dict[RadioData.FIELDNAMES['LONGITUDE']]
-        self.OBC_time = data_dict[RadioData.FIELDNAMES['OBC_TIME']]
-        self.OBC_date = data_dict[RadioData.FIELDNAMES['OBC_DATE']]
+        "latitude",
+        "longitude",
+        "OBC_time",
+        "OBC_date",
+        "GSC_time",
+        "GSC_date",
+    ]
 
-    def updateData(self, data_dict: dict):
-        self.id = data_dict[RadioData.FIELDNAMES['ID']]
-        self.strain_sensor_1 = data_dict[RadioData.FIELDNAMES['STRAIN_1']]
-        self.strain_sensor_2 = data_dict[RadioData.FIELDNAMES['STRAIN_2']]
-        self.strain_sensor_3 = data_dict[RadioData.FIELDNAMES['STRAIN_3']]
-        self.strain_sensor_4 = data_dict[RadioData.FIELDNAMES['STRAIN_4']]
-        self.vibration_sensor_1 = data_dict[RadioData.FIELDNAMES['VIBRATION_1']]
-        self.vibration_sensor_2 = data_dict[RadioData.FIELDNAMES['VIBRATION_2']]
-        self.vibration_sensor_3 = data_dict[RadioData.FIELDNAMES['VIBRATION_3']]
-        self.vibration_sensor_4 = data_dict[RadioData.FIELDNAMES['VIBRATION_4']]
-        self.vibration_sensor_5 = data_dict[RadioData.FIELDNAMES['VIBRATION_5']]
-        self.battery_status = data_dict[RadioData.FIELDNAMES['BATTERY']]
-        self.latitude = data_dict[RadioData.FIELDNAMES['LATITUDE']]
-        self.longitude = data_dict[RadioData.FIELDNAMES['LONGITUDE']]
-        self.OBC_time = data_dict[RadioData.FIELDNAMES['OBC_TIME']]
-        self.OBC_date = data_dict[RadioData.FIELDNAMES['OBC_DATE']]
+    def __init__(self, data_list: list, gps_list: list):
+        """
+        RadioData constructor.
+        :param data_list: contains all the data from the sensors except OBC and GSC timestamps.
+                            Assuming data_list is of length 15 and values in same order as FIELDNAMES.
+        :param gps_list: contains latitude and longitude in that order.
+        """
+        # Strain sensors
+        self.strain_front_lft_1 = int(data_list[0])
+        self.strain_front_lft_2 = int(data_list[1])
+        self.strain_front_lft_3 = int(data_list[2])
+
+        self.strain_front_rt_1 = int(data_list[3])
+        self.strain_front_rt_2 = int(data_list[4])
+        self.strain_front_rt_3 = int(data_list[5])
+
+        self.strain_center_1 = int(data_list[6])
+        self.strain_center_2 = int(data_list[7])
+        self.strain_center_3 = int(data_list[8])
+
+        # Vibration sensors
+        self.vibration_front_lft = int(data_list[9])
+        self.vibration_front_rt = int(data_list[10])
+
+        self.vibration_rear_lft = int(data_list[11])
+        self.vibration_rear_rt = int(data_list[12])
+
+        self.vibration_center = int(data_list[13])
+
+        # Battery
+        self.battery_status = int(data_list[14])
+
+        # GPS
+        self.latitude = float(gps_list[0])
+        self.longitude = float(gps_list[1])
+
+        # On board computer
+        self.OBC_time = ""
+        self.OBC_date = ""
+
+        # Ground station computer
+        self.GSC_time = ""
+        self.GSC_date = ""
 
     @staticmethod
-    def get_fieldnames():
-        return RadioData.FIELDNAMES.values()
+    def get_fieldnames() -> list:
+        return RadioData.FIELDNAMES
 
     def get_data_dict(self) -> dict:
-        data_dict = {
-                "id": self.id,
-                "strain_sensor_1": self.strain_sensor_1,
-                "strain_sensor_2": self.strain_sensor_2,
-                "strain_sensor_3": self.strain_sensor_3,
-                "strain_sensor_4": self.strain_sensor_4,
-                "vibration_sensor_1": self.vibration_sensor_1,
-                "vibration_sensor_2": self.vibration_sensor_2,
-                "vibration_sensor_3": self.vibration_sensor_3,
-                "vibration_sensor_4": self.vibration_sensor_4,
-                "vibration_sensor_5": self.vibration_sensor_5,
-                "battery_status": self.battery_status,
-                "latitude": self.latitude,
-                "longitude": self.longitude,
-                "OBC_time": self.OBC_time,
-                "OBC_date": self.OBC_date
-        }
-        return data_dict
+        return self.__dict__
