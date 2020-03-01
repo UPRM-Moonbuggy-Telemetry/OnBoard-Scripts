@@ -33,10 +33,9 @@ def send_json(obj: RadioData):
     ser.close()
 
 
-if '__main__' == __name__:
+if __name__ == '__main__':
     # for port in list(ports.comports()):
     #     print(port)
     dummy_obj = RadioData(generate_random_data(), generate_random_positions())
     dummy_obj.OBC_date, dummy_obj.OBC_time = datetime.now().strftime("%Y-%b-%d;%I:%M:%S:%p").split(';')
     send_json(dummy_obj)
-

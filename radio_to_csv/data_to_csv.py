@@ -1,6 +1,4 @@
-# noinspection PyUnresolvedReferences
-from csv_funcs import create_csv_file, exists_csv, write_to_csv, randomize_data
-
+from .csv_funcs import create_csv_file, exists_csv, write_to_csv, randomize_data
 from radiodata.radiodata import RadioData
 
 

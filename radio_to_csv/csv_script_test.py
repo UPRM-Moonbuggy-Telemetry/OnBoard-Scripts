@@ -3,8 +3,7 @@ import time as t
 
 from datetime import date as d
 from radiodata.radiodata import RadioData
-# noinspection PyUnresolvedReferences
-from data_to_csv import data_to_csv
+from .data_to_csv import data_to_csv
 
 
 def generate_random_data():
