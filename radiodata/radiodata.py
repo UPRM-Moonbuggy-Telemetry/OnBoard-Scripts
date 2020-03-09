@@ -1,69 +1,77 @@
-class RadioData():
+class RadioData:
 
-    def __init__(self, data_dict = None):
-        if(data_dict != None):
-            for data in data_dict:
-                setattr(self, data, data_dict[data])
-        else:
-            self.id = None
-            self.strain_sensor_1 = None
-            self.strain_sensor_2 = None
-            self.strain_sensor_3 = None
-            self.strain_sensor_4 = None
-            self.vibration_sensor_1 = None
-            self.vibration_sensor_2 = None
-            self.vibration_sensor_3 = None
-            self.vibration_sensor_4 = None
-            self.vibration_sensor_5 = None
-            self.battery_status = None
-            self.latitude = None
-            self.longitude = None
-            self.OBC_time = None
-            self.OBC_date = None
+    FIELDNAMES = [
+        "strain_front_lft_1",
+        "strain_front_lft_2",
+        "strain_front_lft_3",
+        "strain_front_rt_1",
+        "strain_front_rt_2",
+        "strain_front_rt_3",
+        "strain_center_1",
+        "strain_center_2",
+        "strain_center_3",
+        "vibration_front_lft",
+        "vibration_front_rt",
+        "vibration_rear_lft",
+        "vibration_rear_rt",
+        "vibration_center",
+        "battery_status",
 
-        self.fieldnames = ["id", "strain_sensor_1", "strain_sensor_2", "strain_sensor_3",
-                            "strain_sensor_4", "vibration_sensor_1", "vibration_sensor_2",
-                            "vibration_sensor_3", "vibration_sensor_4", "vibration_sensor_5",
-                            "battery_status", "latitude", "longitude", "OBC_time", "OBC_date"]
+        "latitude",
+        "longitude",
+        "OBC_time",
+        "OBC_date",
+        "GSC_time",
+        "GSC_date",
+    ]
 
+    def __init__(self, data_list: list, gps_list: list):
+        """
+        RadioData constructor.
+        :param data_list: contains all the data from the sensors except OBC and GSC timestamps.
+                            Assuming data_list is of length 15 and values in same order as FIELDNAMES.
+        :param gps_list: contains latitude and longitude in that order.
+        """
+        # Strain sensors
+        self.strain_front_lft_1 = int(data_list[0])
+        self.strain_front_lft_2 = int(data_list[1])
+        self.strain_front_lft_3 = int(data_list[2])
 
-    def updateData(self, data_dict: dict):
-        self.id = data_dict.id
-        self.strain_sensor_1 = data_dict.strain_sensor_1
-        self.strain_sensor_2 = data_dict.strain_sensor_2
-        self.strain_sensor_3 = data_dict.strain_sensor_3
-        self.strain_sensor_4 = data_dict.strain_sensor_4
-        self.vibration_sensor_1 = data_dict.vibration_sensor_1
-        self.vibration_sensor_2 = data_dict.vibration_sensor_2
-        self.vibration_sensor_3 = data_dict.vibration_sensor_3
-        self.vibration_sensor_4 = data_dict.vibration_sensor_4
-        self.vibration_sensor_5 = data_dict.vibration_sensor_5
-        self.battery_status = data_dict.battery_status
-        self.latitude = data_dict.latitude
-        self.longitude = data_dict.longitude
-        self.OBC_time = data_dict.OBC_time
-        self.OBC_date = data_dict.OBC_date
+        self.strain_front_rt_1 = int(data_list[3])
+        self.strain_front_rt_2 = int(data_list[4])
+        self.strain_front_rt_3 = int(data_list[5])
 
-    def get_fieldnames(self) -> list:
-        return self.fieldnames
+        self.strain_center_1 = int(data_list[6])
+        self.strain_center_2 = int(data_list[7])
+        self.strain_center_3 = int(data_list[8])
+
+        # Vibration sensors
+        self.vibration_front_lft = int(data_list[9])
+        self.vibration_front_rt = int(data_list[10])
+
+        self.vibration_rear_lft = int(data_list[11])
+        self.vibration_rear_rt = int(data_list[12])
+
+        self.vibration_center = int(data_list[13])
+
+        # Battery
+        self.battery_status = int(data_list[14])
+
+        # GPS
+        self.latitude = float(gps_list[0])
+        self.longitude = float(gps_list[1])
+
+        # On board computer
+        self.OBC_time = ""
+        self.OBC_date = ""
+
+        # Ground station computer
+        self.GSC_time = ""
+        self.GSC_date = ""
+
+    @staticmethod
+    def get_fieldnames() -> list:
+        return RadioData.FIELDNAMES
 
     def get_data_dict(self) -> dict:
-        data_dict = {
-                "id": self.id,
-                "strain_sensor_1": self.strain_sensor_1,
-                "strain_sensor_2": self.strain_sensor_2,
-                "strain_sensor_3": self.strain_sensor_3,
-                "strain_sensor_4": self.strain_sensor_4,
-                "vibration_sensor_1": self.vibration_sensor_1,
-                "vibration_sensor_2": self.vibration_sensor_2,
-                "vibration_sensor_3": self.vibration_sensor_3,
-                "vibration_sensor_4": self.vibration_sensor_4,
-                "vibration_sensor_5": self.vibration_sensor_5,
-                "battery_status": self.battery_status,
-                "latitude": self.latitude,
-                "longitude": self.longitude,
-                "OBC_time": self.OBC_time,
-                "OBC_date": self.OBC_date
-        }
-
-        return data_dict
+        return self.__dict__
