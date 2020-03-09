@@ -1,31 +1,45 @@
 import serial
 import serial.tools.list_ports
-import time
+#import time
+import RPi.GPIO as GPIO
+import pynmea2 #Download pynmea2 on raspberry pi being used
+from radiodata import RadioData
 
-def parser(Data_String):
 """
-    data_types = Data_string.split(':')
-    Data_String = data_types[0]
-    GPS_string = data_types[1]
+GPIO manda string directo (GPS data)
+Todo lo que se mande por Arduino a serial hay que darle un .decode 
+Parser se llama despues de todos los calculos y visnes
+
+TO DO:
+    Modificar parsing function
 """
-    Data_List = Data_String.split(',')
-#    GPS_List = GPS_parser(GPS_string)
+
+def parser(Data_String, GPS_String):
+    # Splits all data recieved and chops it up by its delimiter to be
+    # assigned to their respective variables to be processed.
+    data_types = Data_String.split(',')
     
-    for i in range(len(Data_List)):
-        Data_List[i] = Data_List[i].strip()
+    """
+    GPS recieved via GPIO(UART) pins
+    Make calls to GPIO and receive list
+    """
 
-    return Data_List, GPS_List
+    GPS_List = GPS_String.parse(GPS_String)
+    GPS_LL_List = [GPS_List.latitude, GPS_List.longitude] 
+    
+    #------------------------------|
+    del GPS_List      # Releasing memory due to limitations of rasberry pi
+    del Data_String   # in order to increase speed/effieciency, hopefully :) 
+    #------------------------------|
 
-def GPS_parser(GPS_String):
-    GPS_info_list = GPS_String.split(' ')
-    for i in range(len(GPS_info_list)):
-        GPS_info_list = GPS_info_list[i].strip()
-    return GPS_info_list
+    return data_types, GPS_LL_List
 
-def setup():
-
-      arduino =serial.Serial('COM5',9600)
+def setup(): 
+      arduino =serial.Serial('COM5', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
+      GPIO.setmode(GPIO.BOARD)
       decoded_data = None
+      GPS_Input = GPIO.setup(8, input)
+
 #      print(arduino)
       while True:
 #          data = int(arduino.readline())
@@ -33,10 +47,10 @@ def setup():
           if data:
 #          print(data.decode("utf-8"))
               decoded_data = data.decode("utf-8")
-              cleaned_data_sensors, gps_data = parser(decoded_data)
-              #obj = Buggy(cleaned_data, gps_data)
-              #csv_reader(obj)
-              #send_json(obj)
+              cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
+              obj = RadioData(cleaned_data_list, gps_data_list) # Comment if it does not work correctly
+              csv_reader(obj) # Comment if it does not work correctly
+              send_json(obj) # Comment if it does not work correctly
  
 if "__main__" == __name__:
     setup()
