@@ -3,21 +3,12 @@ import json
 import time as t
 import queue
 
-def post_data(json_data, buggy_flag, data_queue):
+def post_data(json_data, buggy_flag: str, data_queue):
 
-        # url = "http://localhost:3000/api/NewBuggy/"
         url = "http://localhost:3000/api/"
         headers = {'content-type': 'application/json'} 
 
-        ''' Receive json object '''
-        ''' Receive New/Old Buggy flag'''
-
-        # flag = 0        # whichever flag type is received
-        buggy = 'NewBuggy'
-        if buggy_flag:
-                buggy = 'OldBuggy'
-
-        url = url + buggy + '/'
+        url = url + buggy_flag + '/'
 
         data_dict = json.loads(json_data)
 
