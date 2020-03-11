@@ -1,5 +1,7 @@
 class RadioData:
 
+    # This is the global data structure used to store radio-transmitted data across the system.
+
     FIELDNAMES = [
         "strain_front_lft_1",
         "strain_front_lft_2",
