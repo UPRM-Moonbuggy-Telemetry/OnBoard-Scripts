@@ -48,7 +48,7 @@ def setup():
 #          print(data.decode("utf-8"))
               decoded_data = data.decode("utf-8")
               cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
-              obj = RadioData(cleaned_data_list, gps_data_list) # Comment if it does not work correctly
+              obj = RadioData(cleaned_data_list, GPS_Input) # Comment if it does not work correctly
               csv_reader(obj) # Comment if it does not work correctly
               send_json(obj) # Comment if it does not work correctly
  
