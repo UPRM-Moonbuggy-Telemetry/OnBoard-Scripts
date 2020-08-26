@@ -51,6 +51,7 @@ def setup():
               cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
               obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
               csv_reader(obj) # Comment if it does not work correctly
+              # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
               send_json(obj) # Comment if it does not work correctly
  
 if "__main__" == __name__:
