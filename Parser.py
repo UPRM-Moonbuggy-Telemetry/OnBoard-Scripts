@@ -3,7 +3,8 @@ import serial.tools.list_ports
 #import time
 import RPi.GPIO as GPIO
 import pynmea2 #Download pynmea2 on raspberry pi being used
-from radiodata import RadioData
+from radiodata.radiodata import RadioData
+from data_to_csv import data_to_csv
 from serializeObjects import send_json
 
 """
@@ -50,7 +51,7 @@ def setup():
               decoded_data = data.decode("utf-8")
               cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
               obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
-              csv_reader(obj) # Comment if it does not work correctly
+              data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
               # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
               send_json(obj) # Comment if it does not work correctly
  
