@@ -100,7 +100,7 @@ class RadioData():
             'GSC_time': self.GSC_time,
             'GSC_date': self.GSC_date,
             'OBC_time': self.OBC_time,
-            'OBC_date': self.OBC_date}
+            'OBC_date': self.OBC_date
         }
 
         return data_dict
