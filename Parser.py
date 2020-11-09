@@ -1,5 +1,8 @@
 import serial
 import serial.tools.list_ports
+# Maybe implement this to return a list
+# of all available serial ports connected
+
 #import time
 import RPi.GPIO as GPIO
 import pynmea2 #Download pynmea2 on raspberry pi being used
@@ -37,23 +40,41 @@ def parser(Data_String, GPS_String):
     return data_types, GPS_LL_List
 
 def setup(): 
-      arduino =serial.Serial('COM5', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
-      GPIO.setmode(GPIO.BOARD)
-      decoded_data = None
-      GPS_Input = GPIO.setup(8, input)
+    arduino = serial.Serial('COM5', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
+    GPIO.setmode(GPIO.BOARD)
+    decoded_data = None
+    GPS_Input = GPIO.setup(8, input)
 
-#      print(arduino)
-      while True:
-#          data = int(arduino.readline())
-          data = arduino.readline()
-          if data:
-#          print(data.decode("utf-8"))
-              decoded_data = data.decode("utf-8")
-              cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
-              obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
-              data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
-              # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
-              send_json(obj) # Comment if it does not work correctly
+#   print(arduino)
+    while True:
+        # data refers to direct arduino reads
+        data = arduino.readline()
+
+        # We flag for signal, True = connected
+        flag = True # serial.read() # Serial read from groundstation
+        # Possibly neeed to set it to the same port?
+        # What happens if read doesnt read? Does it stay hanging??
+        # Make sure read returns atleast garbage values and not hangs.
+
+        # Assume 'data' is true when signal is not lost and is receiving data
+        if data and flag:
+#           print(data.decode("utf-8"))
+
+            decoded_data = data.decode("utf-8")
+            cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
+            obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
+            data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
+            # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
+            send_json(obj) # Comment if it does not work correctly
+
+        else:
+            decoded_data = data.decode("utf-8")
+            cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
+            obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
+            data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
+            # Does not send JSON package due to signal loss
+            
+        
  
 if "__main__" == __name__:
     setup()
