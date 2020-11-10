@@ -56,22 +56,38 @@ def setup():
         # What happens if read doesnt read? Does it stay hanging??
         # Make sure read returns atleast garbage values and not hangs.
 
-        # Assume 'data' is true when signal is not lost and is receiving data
-        if data and flag:
-#           print(data.decode("utf-8"))
+        # reconnect flags for specific behavior once reconnection happens
+        reconnect = False
 
+        # Assume 'data' is true when signal is not lost and is receiving data
+        if data:
             decoded_data = data.decode("utf-8")
             cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
             obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
             data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
+
+        
+        if flag:
+#           print(data.decode("utf-8"))
+
+            # Prototype functionality for disconection and reconnection
+            # Assuming existing functions
+            if reconnect:
+                # Create function "local_upload" to upload local data log
+                # Implement multithreading to prevent data back ups
+                # Use try-except-finally
+                send_json(csv_to_json("DataLog_Local.csv"))
+                reconnect = False
+
+
             send_json(obj) # Comment if it does not work correctly
 
         else:
-            decoded_data = data.decode("utf-8")
-            cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
-            obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
-            data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
+            reconnect = True
+            # Buffer log for data collected during disconnection
+            if data:
+                data_to_csv(obj, "DataLog_Local.csv")
             # Does not send JSON package due to signal loss
             
         
