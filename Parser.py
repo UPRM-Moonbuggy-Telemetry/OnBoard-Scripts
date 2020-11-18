@@ -55,6 +55,7 @@ def setup():
         # Possibly neeed to set it to the same port?
         # What happens if read doesnt read? Does it stay hanging??
         # Make sure read returns atleast garbage values and not hangs.
+        # Does serial.read() read from any source?? Is there a way to make it a specific read???
 
         # reconnect flags for specific behavior once reconnection happens
         reconnect = False
