@@ -9,6 +9,7 @@ import pynmea2 #Download pynmea2 on raspberry pi being used
 from radiodata.radiodata import RadioData
 from data_to_csv import data_to_csv
 from serializeObjects import send_json
+import pypreprocessor #Download pypreprocessor on raspberry pi being used
 
 """
 GPIO manda string directo (GPS data)
@@ -80,9 +81,10 @@ def setup():
                 # Use try-except-finally
                 send_json(csv_to_json("DataLog_Local.csv"))
                 reconnect = False
-
-
+            
+            #ifdef obj
             send_json(obj) # Comment if it does not work correctly
+            #endif
 
         else:
             reconnect = True
