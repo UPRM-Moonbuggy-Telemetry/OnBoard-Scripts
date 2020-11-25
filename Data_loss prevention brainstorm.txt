@@ -1,0 +1,34 @@
+Data: (if connected)
+	send groundstation y json
+local_starage: (if disconected)
+	store incoming data in log file sequentially
+	
+
+
+connected ---> Parse() until disconection
+		
+		
+disconected --> Local_storage()
+
+
+timestamp, data, data, . . ., data (sort by timestamp to prevent data disorder?)
+
+
+local_storage() keeps saving but new data is now transferred to the csv instead
+from csv we take new data sequentially and send to ground station.
+
+while True:
+	if(disconnected)
+		append to file
+	else
+		for lines in file:
+			send lines[i]
+		write to file
+		send file
+
+
+*update Idea*
+-Use multithreading for data read/write
+-Use environment variables on Windows/Linux as to not manually change the code
+between platforms.
+

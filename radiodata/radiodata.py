@@ -25,6 +25,8 @@ class RadioData:
         "OBC_date",
         "GSC_time",
         "GSC_date",
+
+        #include speed from hall effect sensors
     ]
 
     def __init__(self, data_list: list, gps_list: list):
@@ -62,6 +64,8 @@ class RadioData:
         # GPS
         self.latitude = float(gps_list[0])
         self.longitude = float(gps_list[1])
+
+        # Include speed from hall effect sensors
 
         # On board computer
         self.OBC_time = ""
