@@ -3,12 +3,12 @@ class RadioData:
     # This is the global data structure used to store radio-transmitted data across the system.
 
     FIELDNAMES = [
-        "strain_front_lft_1",
-        "strain_front_lft_2",
-        "strain_front_lft_3",
-        "strain_front_rt_1",
-        "strain_front_rt_2",
-        "strain_front_rt_3",
+        "strain_front_lft_1", # Vertical
+        "strain_front_lft_2", # Horizontal
+        "strain_front_lft_3", # 45 degree
+        "strain_front_rt_1", # Vertical
+        "strain_front_rt_2", # Horizontal
+        "strain_front_rt_3", # 45 degree
         "strain_center_1",
         "strain_center_2",
         "strain_center_3",
@@ -25,6 +25,15 @@ class RadioData:
         "OBC_date",
         "GSC_time",
         "GSC_date",
+
+        # Include speed from hall effect sensors
+
+        # Add extra sensor fieldnames at the end 
+        # of the dictionary. That way if there are 
+        # missing sensors, it will display a blank field.
+        # If using old buggy, those "new" fields are blank,
+        # only "filled" when using new buggy with the extra
+        # sensors.
     ]
 
     def __init__(self, data_list: list, gps_list: list):
@@ -62,6 +71,8 @@ class RadioData:
         # GPS
         self.latitude = float(gps_list[0])
         self.longitude = float(gps_list[1])
+
+        # Include speed from hall effect sensors
 
         # On board computer
         self.OBC_time = ""
