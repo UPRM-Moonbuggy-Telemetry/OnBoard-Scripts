@@ -44,6 +44,7 @@ def parser(Data_String, GPS_String):
 def setup(): 
     arduino = serial.Serial('COM5', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
     GPIO.setmode(GPIO.BOARD)
+    # Setup BUGGY_ID 'toggle' so that we know which buggy we are currently running.
     decoded_data = None
     GPS_Input = GPIO.setup(8, input)
 
