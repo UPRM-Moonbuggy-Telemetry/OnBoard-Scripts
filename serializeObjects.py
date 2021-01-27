@@ -25,7 +25,7 @@ def send_json(obj: RadioData):
     obj.OBC_date = timestamp.pop(0)
     obj.OBC_time = timestamp.pop(0)
 
-    data_to_send = {"data": obj.get_data_dict(), "buggy_name": get_buggy_name_by_id(BUGGY_ID)}
+    data_to_send = {"data": obj.get_data_dict(), "buggy_id": obj.BUGGY_ID}
 
     data = json.dumps(data_to_send, cls=MyEncoder)
     ser.write(data.encode('utf-8'))
