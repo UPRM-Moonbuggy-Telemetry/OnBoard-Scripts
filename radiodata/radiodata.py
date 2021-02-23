@@ -72,17 +72,17 @@ class RadioData:
         """
         if(BUGGY_ID):
             # Strain sensors
-            self.strain_center_front_1 = int(data_list[0])
-            self.strain_center_front_2 = int(data_list[1])
-            self.strain_center_front_3 = int(data_list[2])
+            self.strain_center_front_1 = float(data_list[0]) # Changed to float
+            self.strain_center_front_2 = float(data_list[1]) # Changed to float
+            self.strain_center_front_3 = float(data_list[2]) # Changed to float
 
-            self.strain_center_back_1 = int(data_list[3])
-            self.strain_center_back_2 = int(data_list[4])
-            self.strain_center_back_3 = int(data_list[5])
+            self.strain_center_back_1 = float(data_list[3]) # Changed to float
+            self.strain_center_back_2 = float(data_list[4]) # Changed to float
+            self.strain_center_back_3 = float(data_list[5]) # Changed to float
 
-            self.strain_backseat_1 = int(data_list[6])
-            self.strain_backseat_2 = int(data_list[7])
-            self.strain_backseat_3 = int(data_list[8])
+            self.strain_backseat_1 = float(data_list[6]) # Changed to float
+            self.strain_backseat_2 = float(data_list[7]) # Changed to float
+            self.strain_backseat_3 = float(data_list[8]) # Changed to float
 
             # Vibration sensors
             self.vibration_front_lft = int(data_list[9])
@@ -94,7 +94,7 @@ class RadioData:
             self.vibration_center_back = int(data_list[13])
 
             # Battery
-            self.battery_status = int(data_list[14])
+            self.battery_status = float(data_list[14]) # Changed to float
 
             # GPS
             self.latitude = float(gps_list[0])
@@ -112,17 +112,17 @@ class RadioData:
 
         else:
             # Strain sensors
-            self.strain_center_front_1 = int(data_list[0])
-            self.strain_center_front_2 = int(data_list[1])
-            self.strain_center_front_3 = int(data_list[2])
+            self.strain_center_front_1 = float(data_list[0]) # Changed to float
+            self.strain_center_front_2 = float(data_list[1]) # Changed to float
+            self.strain_center_front_3 = float(data_list[2]) # Changed to float
 
-            self.strain_center_back_1 = int(data_list[3])
-            self.strain_center_back_2 = int(data_list[4])
-            self.strain_center_back_3 = int(data_list[5])
+            self.strain_center_back_1 = float(data_list[3]) # Changed to float
+            self.strain_center_back_2 = float(data_list[4]) # Changed to float
+            self.strain_center_back_3 = float(data_list[5]) # Changed to float
 
-            self.strain_frontseat_1 = int(data_list[6])
-            self.strain_frontseat_2 = int(data_list[7])
-            self.strain_frontseat_3 = int(data_list[8])
+            self.strain_frontseat_1 = float(data_list[6]) # Changed to float
+            self.strain_frontseat_2 = float(data_list[7]) # Changed to float
+            self.strain_frontseat_3 = float(data_list[8]) # Changed to float
 
             # Vibration sensors
             self.vibration_backseat_top = int(data_list[9])
@@ -132,7 +132,7 @@ class RadioData:
             self.vibration_front_left = int(data_list[12])
 
             # Battery
-            self.battery_status = int(data_list[13])
+            self.battery_status = float(data_list[13]) # Changed to float
             
             # GPS
             self.latitude = float(gps_list[0])
