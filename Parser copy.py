@@ -71,7 +71,7 @@ def process_data(threadID):
             data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss. 
 
-def send_data(threadID):
+async def send_data(threadID):
     reconnect = False 
     # Groundstation pings the thread
     antenna = serial.Serial('COM6', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
