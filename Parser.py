@@ -44,7 +44,7 @@ def setup():
     GPIO.setmode(GPIO.BOARD)
     # Setup BUGGY_ID 'toggle' so that we know which buggy we are currently running.
     decoded_data = None
-    GPS_Input = GPIO.setup(8, input)
+    GPS_Input = GPIO.setup(8, GPIO.IN)
 
 #   print(arduino)
     while True:
