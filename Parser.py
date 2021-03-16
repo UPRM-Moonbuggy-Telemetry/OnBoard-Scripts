@@ -59,6 +59,8 @@ def setup():
         # data refers to direct arduino reads
         data = arduino.readline()
 
+        print(data)
+        
         # Add GPS read
 
         # We flag for signal, True = connected
