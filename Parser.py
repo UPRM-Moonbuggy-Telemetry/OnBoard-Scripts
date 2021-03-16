@@ -28,10 +28,11 @@ def parser(Data_String, GPS_String):
     GPS recieved via GPIO(UART) pins
     Make calls to GPIO and receive list
     """
-
-    GPS_List = pynmea2.parse(GPS_String)
-    GPS_LL_List = [GPS_List.latitude, GPS_List.longitude] # This requires Pynmea2
-    
+    if(GPS_String != None):
+        GPS_List = pynmea2.parse(GPS_String)
+        GPS_LL_List = [GPS_List.latitude, GPS_List.longitude] # This requires Pynmea2
+    else:
+        Gps_String == "No GPS info available...\n"
     #------------------------------|
     del GPS_List      # Releasing memory due to limitations of rasberry pi
     del Data_String   # in order to increase speed/efficiency, hopefully :) 
