@@ -10,7 +10,7 @@ import pynmea2 #Download pynmea2 on raspberry pi being used
 from radiodata.radiodata import RadioData
 from data_to_csv import data_to_csv
 from serializeObjects import send_json
-import pypreprocessor #Download pypreprocessor on raspberry pi being used
+#import pypreprocessor #Download pypreprocessor on raspberry pi being used
 
 """
 GPIO manda string directo (GPS data)
