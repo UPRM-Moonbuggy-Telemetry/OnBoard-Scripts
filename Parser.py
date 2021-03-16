@@ -9,6 +9,7 @@ import pynmea2 #Download pynmea2 on raspberry pi being used
 from radiodata.radiodata import RadioData
 from data_to_csv import data_to_csv
 from serializeObjects import send_json
+from env_variables import BUGGY_ID
 
 """
 GPIO manda string directo (GPS data)
@@ -74,7 +75,7 @@ def setup():
         if data:
             decoded_data = data.decode("utf-8")
             cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
-            obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
+            obj = RadioData(cleaned_data_list, gps_data_list, BUGGY_ID) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
             data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
 
