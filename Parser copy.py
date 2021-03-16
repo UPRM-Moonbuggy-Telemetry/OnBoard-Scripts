@@ -1,5 +1,4 @@
 from os import close
-import Pre_Processor
 import serial
 import sys
 import serial.tools.list_ports
@@ -16,7 +15,7 @@ from radiodata.radiodata import RadioData
 from data_to_csv import data_to_csv
 from serializeObjects import send_json
 from csv_funcs import csv_to_json
-import pypreprocessor #Download pypreprocessor on raspberry pi being used
+#import pypreprocessor #Download pypreprocessor on raspberry pi being used
 
 """
 GPIO manda string directo (GPS data)
