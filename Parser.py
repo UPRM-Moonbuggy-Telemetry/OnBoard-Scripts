@@ -12,12 +12,7 @@ from serializeObjects import send_json
 from env_variables import BUGGY_ID
 
 """
-GPIO manda string directo (GPS data)
-Todo lo que se mande por Arduino a serial hay que darle un .decode 
-Parser se llama despues de todos los calculos y visnes
-
-TO DO:
-    Modificar parsing function
+Documentation explanation goes here.
 """
 
 def parser(Data_String, GPS_String):
@@ -28,6 +23,11 @@ def parser(Data_String, GPS_String):
     """
     GPS recieved via GPIO(UART) pins
     Make calls to GPIO and receive list
+    Delete Data_String once it is used
+
+    If GPS isnt sending info, prevent
+    a crash by returning Null while still sending
+    data. Otherwise, return data and GPS info.
     """
     #------------------------------|
     del Data_String   # Releasing memory due to limitations of rasberry pi 
@@ -45,6 +45,7 @@ def parser(Data_String, GPS_String):
     else:
         return data_types, None 
 
+    # This function is functionally complete
     
 
 def setup(): 
@@ -77,6 +78,7 @@ def setup():
         if data:
             decoded_data = data.decode("utf-8")
             cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
+            print(cleaned_data_list)
             obj = RadioData(cleaned_data_list, gps_data_list, BUGGY_ID) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
             data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
