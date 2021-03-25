@@ -19,6 +19,7 @@ def parser(Data_String, GPS_String):
     # Splits all data recieved and chops it up by its delimiter to be
     # assigned to their respective variables to be processed.
     data_types = Data_String.split(',')
+    data_types = [data_types.rstrip() for x in data_types]
     
     """
     GPS recieved via GPIO(UART) pins
