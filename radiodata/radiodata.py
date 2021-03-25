@@ -1,7 +1,8 @@
+from env_variables import BUGGY_ID
 class RadioData:
 
     # This is the global data structure used to store radio-transmitted data across the system.
-    from env_variables import BUGGY_ID
+    
 
     FIELDNAMES_NEW = [
         "strain_center_front_1", # Vertical 
@@ -150,8 +151,8 @@ class RadioData:
             self.GSC_time = ""
             self.GSC_date = ""
 
-    @staticmethod
-    def get_fieldnames(BUGGY_ID) -> list:
+    #@staticmethod
+    def get_fieldnames(BUGGY_ID):
         if(BUGGY_ID):
             return RadioData.FIELDNAMES_NEW
         else:
