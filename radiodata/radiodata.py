@@ -1,8 +1,7 @@
-from env_variables import BUGGY_ID
 class RadioData:
 
     # This is the global data structure used to store radio-transmitted data across the system.
-    
+    from env_variables import BUGGY_ID
 
     FIELDNAMES_NEW = [
         "strain_center_front_1", # Vertical 
@@ -64,7 +63,7 @@ class RadioData:
 
     ]
 
-    def __init__(self, data_list: list, gps_list: list, BUGGY_ID):
+    def __init__(self, data_list: list, gps_list: list, BUGGY_ID: int):
         """
         RadioData constructor.
         :param data_list: contains all the data from the sensors except OBC and GSC timestamps.
