@@ -97,11 +97,11 @@ class RadioData:
 
             # Battery
             self.battery_status = float(data_list[14]) # Changed to float
-            """
+            
             # GPS
             self.latitude = float(gps_list[0])
             self.longitude = float(gps_list[1])
-
+            """
             # Include speed from hall effect sensors
 
             # On board computer
