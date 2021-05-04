@@ -9,37 +9,45 @@ import pynmea2 #Download pynmea2 on raspberry pi being used
 from radiodata.radiodata import RadioData
 from data_to_csv import data_to_csv
 from serializeObjects import send_json
+from env_variables import BUGGY_ID
 
 """
-GPIO manda string directo (GPS data)
-Todo lo que se mande por Arduino a serial hay que darle un .decode 
-Parser se llama despues de todos los calculos y visnes
-
-TO DO:
-    Modificar parsing function
+Documentation explanation goes here.
 """
 
 def parser(Data_String, GPS_String):
     # Splits all data recieved and chops it up by its delimiter to be
     # assigned to their respective variables to be processed.
     data_types = Data_String.split(',')
-    
+    #data_types = [data_types.rstrip() for x in data_types] 
+
     """
     GPS recieved via GPIO(UART) pins
     Make calls to GPIO and receive list
+    Delete Data_String once it is used
+
+    If GPS isnt sending info, prevent
+    a crash by returning Null while still sending
+    data. Otherwise, return data and GPS info.
     """
+    #------------------------------|
+    del Data_String   # Releasing memory due to limitations of rasberry pi 
+    #------------------------------|
+
     if(GPS_String != None):
         GPS_List = pynmea2.parse(GPS_String)
         GPS_LL_List = [GPS_List.latitude, GPS_List.longitude] # This requires Pynmea2
-        del GPS_List
+        
+        #------------------------------|
+        del GPS_List      # Releasing memory due to limitations of rasberry pi
+        #------------------------------|
+        return data_types, GPS_LL_List
+    
     else:
-        GPS_String = "No GPS info available...\n"
-    #------------------------------|
-    #del GPS_List      # Releasing memory due to limitations of rasberry pi
-    del Data_String   # in order to increase speed/efficiency, hopefully :) 
-    #------------------------------|
+        return data_types, None 
 
-    return data_types, GPS_LL_List
+    # This function is functionally complete
+    
 
 def setup(): 
     arduino = serial.Serial('/dev/ttyACM0', 9600) #Replace 'COM' port for 'ttyACM*some number*' when not using windows
@@ -53,6 +61,8 @@ def setup():
         # data refers to direct arduino reads
         data = arduino.readline()
 
+        print(data)
+        
         # Add GPS read
 
         # We flag for signal, True = connected
@@ -69,7 +79,8 @@ def setup():
         if data:
             decoded_data = data.decode("utf-8")
             cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
-            obj = RadioData(cleaned_data_list, gps_data_list) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
+            print(cleaned_data_list)
+            obj = RadioData(cleaned_data_list, gps_data_list, BUGGY_ID) # Creates object of type RadioData with parsed data lists // Comment if it does not work correctly
             data_to_csv(obj, "DataLog.csv") # Comment if it does not work correctly
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
 

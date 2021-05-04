@@ -63,7 +63,7 @@ class RadioData:
 
     ]
 
-    def __init__(self, data_list: list, gps_list: list, BUGGY_ID):
+    def __init__(self, data_list: list, gps_list: list, BUGGY_ID: int):
         """
         RadioData constructor.
         :param data_list: contains all the data from the sensors except OBC and GSC timestamps.
@@ -71,8 +71,10 @@ class RadioData:
         :param gps_list: contains latitude and longitude in that order.
         """
         if(BUGGY_ID):
+            
             # Strain sensors
             self.strain_center_front_1 = float(data_list[0]) # Changed to float
+            """
             self.strain_center_front_2 = float(data_list[1]) # Changed to float
             self.strain_center_front_3 = float(data_list[2]) # Changed to float
 
@@ -85,21 +87,21 @@ class RadioData:
             self.strain_backseat_3 = float(data_list[8]) # Changed to float
 
             # Vibration sensors
-            self.vibration_front_lft = int(data_list[9])
-            self.vibration_front_rt = int(data_list[10])
+            self.vibration_front_lft = float(data_list[9])
+            self.vibration_front_rt = float(data_list[10])
 
-            self.vibration_rear_lft = int(data_list[11])
-            self.vibration_rear_rt = int(data_list[12])
+            self.vibration_rear_lft = float(data_list[11])
+            self.vibration_rear_rt = float(data_list[12])
 
-            self.vibration_center_back = int(data_list[13])
+            self.vibration_center_back = float(data_list[13])
 
             # Battery
             self.battery_status = float(data_list[14]) # Changed to float
-
+            
             # GPS
             self.latitude = float(gps_list[0])
             self.longitude = float(gps_list[1])
-
+            """
             # Include speed from hall effect sensors
 
             # On board computer
@@ -125,11 +127,11 @@ class RadioData:
             self.strain_frontseat_3 = float(data_list[8]) # Changed to float
 
             # Vibration sensors
-            self.vibration_backseat_top = int(data_list[9])
-            self.vibration_backseat_bottom = int(data_list[10])
+            self.vibration_backseat_top = float(data_list[9])
+            self.vibration_backseat_bottom = float(data_list[10])
 
-            self.vibration_front_right = int(data_list[11])
-            self.vibration_front_left = int(data_list[12])
+            self.vibration_front_right = float(data_list[11])
+            self.vibration_front_left = float(data_list[12])
 
             # Battery
             self.battery_status = float(data_list[13]) # Changed to float
@@ -148,8 +150,8 @@ class RadioData:
             self.GSC_time = ""
             self.GSC_date = ""
 
-    @staticmethod
-    def get_fieldnames(BUGGY_ID) -> list:
+    #@staticmethod
+    def get_fieldnames(BUGGY_ID):
         if(BUGGY_ID):
             return RadioData.FIELDNAMES_NEW
         else:

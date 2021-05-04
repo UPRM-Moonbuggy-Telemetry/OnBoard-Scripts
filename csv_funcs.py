@@ -35,6 +35,13 @@ def randomize_data(data: dict) -> dict:
 def csv_to_json(csvFile: TextIOWrapper, break_loop):
     # Open the DataLog.csv (don't close it nevel)
     # Reads the lines as they are updated in order
+
+    """
+    Use a buffer file and a backup log file.
+    Append to the buffer until disconnection,
+    then the buffer is overwritten and then 
+    appended until another disconnection, if any.
+    """
     csv_rows = csv.DictReader(csvFile,fieldnames=None)
     next_csv_row = None
 
