@@ -3,7 +3,7 @@ Environment variables
 """
 
 # Ports
-SEND_JSON_PORT = "/dev/ttyACM0"
+SEND_JSON_PORT = "/dev/ttyACM1"
 ACM1 = "/dev/ttyACM1"
 ACM2 = "/dev/ttyACM2"
 ACM3 = "/dev/ttyACM3"
