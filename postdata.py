@@ -3,6 +3,10 @@ import json
 import time as t
 import queue
 
+# This is the database post function. Use this inside
+# send_json with json_data = data, buggy_flag= BUGGY_ID
+# and data_queue is whatever queue is used for data collected
+# during disconnection using a dataloss prevention mechanism.
 def post_data(json_data, buggy_flag: str, data_queue):
 
         url = "http://localhost:3000/api/"

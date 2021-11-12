@@ -8,7 +8,7 @@ from env_variables import BUGGY_ID, SEND_JSON_PORT, BAUDRATE
 
 # import serial.tools.list_ports as ports
 
-
+# Gets current buggy name.
 def get_buggy_name_by_id(pk):
     return "NewBuggy" if pk == 1 else "OldBuggy"
 
@@ -17,7 +17,9 @@ class MyEncoder(json.JSONEncoder):
     def default(self, o):
         return o.__dict__
 
-
+# Sets the remaining info fields in RadioData to the appropiate timestamp
+# for classification purposes. Will need to change from posting to serial
+# to posting into the database directly.
 def send_json(obj: RadioData):
     ser = Serial(SEND_JSON_PORT, baudrate=BAUDRATE, timeout=1)
 
