@@ -3,6 +3,8 @@ import serial
 import serial.tools.list_ports
 # Maybe implement this to return a list
 # of all available serial ports connected
+from pythonping import ping
+# install pythonping
 
 #import time
 import RPi.GPIO as GPIO
@@ -46,22 +48,26 @@ def setup():
     GPIO.setmode(GPIO.BOARD)
     decoded_data = None
     GPS_Input = GPIO.setup(8, input)
-
+    
 #   print(arduino)
     while True:
         # data refers to direct arduino reads
         data = arduino.readline()
 
         # We flag for signal, True = connected
-        flag = True # serial.read() # Serial read from groundstation
+        """
+        Flag *NOW* means whether connected to internetor not.
+        Ping google.com (or wherever), should  be True (in value)
+        if a successful connection is established. False otherwise.
+        This retains the "Goundstation" logic.
+        """
+        online = bool(ping('www.google.com')) # serial.read() # Serial read from groundstation
         # Possibly neeed to set it to the same port?
         # What happens if read doesnt read? Does it stay hanging??
         # Make sure read returns atleast garbage values and not hangs.
         # Does serial.read() read from any source?? Is there a way to make it a specific read???
         # reconnect flags for specific behavior once reconnection happens
         
-        reconnect = False
-
         # Assume 'data' is true when signal is not lost and is receiving data
         if data:
             decoded_data = data.decode("utf-8")
@@ -71,24 +77,21 @@ def setup():
             # Keep local CSV file that is appended so that data loss is prevented in case of signal loss.
 
         
-        if flag:
+        if online:
 #           print(data.decode("utf-8"))
 
             # Prototype functionality for disconection and reconnection
             # Assuming existing functions
-            if reconnect:
-                # Create function "local_upload" to upload local data log
-                # Implement multithreading to prevent data back ups
-                # Use try-except-finally
-                send_json(csv_to_json("DataLog_Local.csv"))
-                reconnect = False
-            
+
+            # Create function "local_upload" to upload local data log
+            # Implement multithreading to prevent data back ups
+            # Use try-except-finally
+            send_json(csv_to_json("DataLog_Local.csv"))            
             #ifdef obj
             send_json(obj) # Comment if it does not work correctly
             #endif
 
         else:
-            reconnect = True
             # Buffer log for data collected during disconnection
             if data:
                 data_to_csv(obj, "DataLog_Local.csv")

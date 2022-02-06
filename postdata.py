@@ -24,8 +24,7 @@ def post_data(json_data, buggy_flag: str, data_queue):
                                 req.post(url, data=d, headers=headers)
                 else:
                         req.post(url, data=data_dict, headers=headers) 
-                        t.sleep(3)
+                        
         except Exception:
                 print("No connection! Queueing data...")
                 data_queue.put(data_dict)
-                t.sleep(3)
