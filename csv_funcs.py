@@ -1,10 +1,8 @@
 import csv
-from io import TextIOWrapper
 import random as rnd
 import os.path
-import json
 
-from os import close, path
+from os import path
 
 # This function creates a new CSV file with the given name, and adds a header containing the given fields.
 def create_csv_file(filename: str, fields: list):
@@ -31,28 +29,3 @@ def randomize_data(data: dict) -> dict:
             data[key] = rnd.randint(0, 100)
 
     return data
-
-def csv_to_json(csvFile: TextIOWrapper, break_loop):
-    # Open the DataLog.csv (don't close it nevel)
-    # Reads the lines as they are updated in order
-
-    """
-    Use a buffer file and a backup log file.
-    Append to the buffer until disconnection,
-    then the buffer is overwritten and then 
-    appended until another disconnection, if any.
-    """
-    csv_rows = csv.DictReader(csvFile,fieldnames=None)
-    next_csv_row = None
-
-    if(csv_rows.__next__().__next__() != None):
-        next_csv_row = csv_rows.__next__()
-    else: 
-        #Read from current line to line before eof
-        next_csv_row = csv_rows.__next__()
-        csvFile.close()
-        break_loop = False
-        
-
-    return json.dumps(next_csv_row), break_loop
-    # return json_list
