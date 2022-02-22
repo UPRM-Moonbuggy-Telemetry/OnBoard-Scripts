@@ -54,21 +54,17 @@ def setup():
         # data refers to direct arduino reads
         data = arduino.readline()
 
-        # We flag for signal, True = connected
         """
-        Flag *NOW* means whether connected to internetor not.
+        Flag (online) *NOW* means whether connected to internet or not.
         Ping google.com (or wherever), should  be True (in value)
         if a successful connection is established. False otherwise.
         This retains the "Goundstation" logic.
         """
-        online = bool(ping('www.google.com')) # serial.read() # Serial read from groundstation
-        # Possibly neeed to set it to the same port?
-        # What happens if read doesnt read? Does it stay hanging??
+        online = bool(ping('www.google.com')) 
         # Make sure read returns atleast garbage values and not hangs.
         # Does serial.read() read from any source?? Is there a way to make it a specific read???
-        # reconnect flags for specific behavior once reconnection happens
         
-        # Assume 'data' is true when signal is not lost and is receiving data
+        # Assume 'data' is true when Pi is receiving data
         if data:
             decoded_data = data.decode("utf-8")
             cleaned_data_list, gps_data_list = parser(decoded_data, GPS_Input)
@@ -78,23 +74,17 @@ def setup():
 
         
         if online:
-#           print(data.decode("utf-8"))
+            #print(data.decode("utf-8"))
 
-            # Prototype functionality for disconection and reconnection
-            # Assuming existing functions
+            # Implement multithreading to prevent data back ups if time allows
 
-            # Create function "local_upload" to upload local data log
-            # Implement multithreading to prevent data back ups
-            # Use try-except-finally
-            send_json(csv_to_json("DataLog_Local.csv"))            
-            #ifdef obj
+            send_json(data_to_csv("DataLog.csv"))            
             send_json(obj) # Comment if it does not work correctly
-            #endif
 
         else:
             # Buffer log for data collected during disconnection
             if data:
-                data_to_csv(obj, "DataLog_Local.csv")
+                data_to_csv(obj, "DataLog_Buffer.csv")
             # Does not send JSON package due to signal loss
             
         
