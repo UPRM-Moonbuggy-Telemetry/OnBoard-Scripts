@@ -1,5 +1,6 @@
 import csv
 import csv_funcs
+import pandas as pd
 
 from radiodata import RadioData
 
@@ -21,6 +22,10 @@ def data_to_csv(data_obj: RadioData, filename: str):
     csv_funcs.write_to_csv(filename, csv_funcs.randomize_data(data_obj.get_data_dict()))
     # We can turn this csv into a JSON and just return it
     # 2 line change: CSV --> JSON conversion and return JSON (to be used by send_json)
+    csv_data_to_convert = pd.read_csv(filename, sep = ",")
+    csv_data_to_convert.to_json(orient = "values")
+    
+    return csv_data_to_convert
 
 
 """ 
